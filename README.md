@@ -48,6 +48,17 @@ Noise Format
 }
 ````
 
+Available Noise Modifiers
+-------------------------
+
+###:setthreshold(threshold)
+Sets the threshold for the result value. If threshold is less than 0,
+thresholding is disabled.
+
+###:setseed(seed)
+Sets the seed value for the noise object. If the function is called with no
+arguments, it's set to the default value.
+
 Available Noise Functions
 -------------------------
 
