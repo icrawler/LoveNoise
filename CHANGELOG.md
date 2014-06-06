@@ -1,10 +1,10 @@
-0.1.3
+0.1.2
 -----
 
 * Added setoperation.
 * Added lovenoise.findOctaveLimit
 
-0.1.2
+0.1.1
 -----
 
 * Added ridged multi-fractal noise (http://libnoise.sourceforge.net/docs/classnoise_1_1module_1_1RidgedMulti.html)
