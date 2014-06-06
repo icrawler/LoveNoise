@@ -83,6 +83,15 @@ Generates ordinary simplex noise.
 
 No arguments.
 
+###"ridged"
+
+Generates ridged multi-fractal noise.
+
+Args:
+* n (required) - number of octaves
+* a (default: 0.5) - amplitude scaling factor
+* f (default: 2) - frequency scaling factor
+
 Util functions
 ---------------
 
