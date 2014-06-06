@@ -32,6 +32,8 @@ local lovenoise = {
 -- local references
 local MAXVAL = 2 ^ 32
 local random = math.random
+local max = math.max
+local min = math.min
 
 -- local variables
 local Noise = {}
@@ -40,15 +42,27 @@ Noise.__index = Noise
 -- presets
 local preset = require("presetnoise")
 
+-- util functions
+local function clamp(v, M, m)
+	M = M or 1
+	m = m or 0
+	return max(min(v, M), m)
+end
+
 -- Main Functions --
 
 function lovenoise.newNoise(noisetable)
 	return Noise.new(noisetable)
 end
 
+function lovenoise.findOctaveLimit(a, d)
+	if a >= 1 then return nil end
+	return math.ceil(math.log(1/d)/math.log(a))
+end
+
 function Noise.new(noisetable)
 	return
-	setmetatable({noisetable = noisetable, normalized=false, seed=0, threshold = -1}, Noise)
+	setmetatable({noisetable = noisetable, normalized=false, seed=0, threshold = -1, operation="multiply"}, Noise)
 end
 
 function Noise:setseed(seed)
@@ -66,6 +80,18 @@ function Noise:setthreshold(threshold)
 	return self
 end
 
+local validops = {multiply = true,
+				  add = true,
+				  subtract = true,
+				  divide = true}
+
+function Noise:setoperation(operation)
+	if validops[operation] then
+		self.operation = operation
+	end
+	return self
+end
+
 function Noise:evaluate(x, y, i)
 	if i > #self.noisetable then return 0 end
 	local noise = self.noisetable[i]
@@ -79,11 +105,20 @@ end
 function Noise:eval(x, y)
 	local result = 1
 	for i=1, #self.noisetable do
-		result = result*self:evaluate(x, y, i)
+		local v = self:evaluate(x, y, i)
+		if self.operation == "multiply" then
+			result = result*v
+		elseif self.operation == "divide" then
+			result = result/v
+		elseif self.operation == "add" then
+			result = result+v
+		elseif self.operation == "subtract" then
+			result = result-v
+		end
 	end
 	if self.normalized then return result*2-1 end
 	if self.threshold > 0 then return result > self.threshold and 1 or 0 end
-	return result
+	return clamp(result)
 end
 
 -- end--

@@ -59,6 +59,12 @@ thresholding is disabled.
 Sets the seed value for the noise object. If the function is called with no
 arguments, it's set to the default value.
 
+###:setnormalized(normalized)
+Changes whether the noise object will return a value from -1 to 1 or not.
+
+###:setoperation(operation)
+Changes which operation to use when combining noise. Valid operations: multiply, divide, add, subtract.
+
 Available Noise Functions
 -------------------------
 
@@ -76,6 +82,23 @@ Args:
 Generates ordinary simplex noise.
 
 No arguments.
+
+Util functions
+---------------
+
+###lovenoise.findOctaveLimit(a, d)
+
+Returns the maximum octave limit.
+
+Args:
+* a - amplitude scaling factor
+* d - amount of detail
+
+Example:
+```lua
+print(lovenoise.findOctaveLimit(0.5, 255))
+>>> 8
+````
 
 License
 -------
