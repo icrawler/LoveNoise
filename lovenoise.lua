@@ -1,6 +1,6 @@
 
 local lovenoise = {
-	_VERSION     = 'v0.1.2',
+	_VERSION     = 'v0.1.3',
     _DESCRIPTION = 'Noise Library for LOVE',
     _URL         = 'https://github.com/icrawler/lovenoise',
     _LICENSE     = [[
