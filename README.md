@@ -48,22 +48,23 @@ Noise Format
 }
 ````
 
-Available Noise Modifiers
--------------------------
+Available Noise Methods
+-----------------------
 
 ###:setthreshold(threshold)
-Sets the threshold for the result value. If threshold is less than 0,
-thresholding is disabled.
+Sets the threshold for the result value. If threshold is less than 0, thresholding is disabled.
 
 ###:setseed(seed)
-Sets the seed value for the noise object. If the function is called with no
-arguments, it's set to the default value.
+Sets the seed value for the noise object. If the function is called with no arguments, it's set to the default value.
 
 ###:setnormalized(normalized)
 Changes whether the noise object will return a value from -1 to 1 or not.
 
 ###:setoperation(operation)
 Changes which operation to use when combining noise. Valid operations: multiply, divide, add, subtract.
+
+###:setmap(map)
+Sets the mapping function to use when evaluating values. If the function is called with no arguments, it's set to nil.
 
 Available Noise Functions
 -------------------------

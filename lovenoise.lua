@@ -62,7 +62,7 @@ end
 
 function Noise.new(noisetable)
 	return
-	setmetatable({noisetable = noisetable, normalized=false, seed=0, threshold = -1, operation="multiply"}, Noise)
+	setmetatable({noisetable = noisetable, normalized=false, seed=0, threshold = -1, operation="multiply", map=nil}, Noise)
 end
 
 function Noise:setseed(seed)
@@ -77,6 +77,12 @@ end
 
 function Noise:setthreshold(threshold)
 	self.threshold = threshold
+	return self
+end
+
+function Noise:setmap(map)
+	if type(map) ~= "function" then return self end
+	self.map = map
 	return self
 end
 
@@ -116,8 +122,9 @@ function Noise:eval(x, y)
 			result = result-v
 		end
 	end
-	if self.normalized then return result*2-1 end
-	if self.threshold > 0 then return result > self.threshold and 1 or 0 end
+	if self.normalized then return result*2-1
+	elseif self.threshold > 0 then return result > self.threshold and 1 or 0
+	elseif self.map then return self.map(result) end
 	return clamp(result)
 end
 

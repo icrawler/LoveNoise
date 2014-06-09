@@ -1,14 +1,12 @@
 -- local references
 local lnoise = love.math.noise
-local abs = math.abs
+local abs = function(a) return a < 0 and -a or a end
 local max = math.max
 local min = math.min
 
 -- util functions
-local function clamp(v, M, m)
-	M = M or 1
-	m = m or 0
-	return max(min(v, M), m)
+local function clamp01(v)
+	return (v > 1 and 1 or v) < 0 and 0 or v
 end
 
 -- fractal noise

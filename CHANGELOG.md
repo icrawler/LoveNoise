@@ -1,7 +1,11 @@
+0.1.3
+-----
+* Added :setmap
+
 0.1.2
 -----
 
-* Added setoperation.
+* Added :setoperation.
 * Added lovenoise.findOctaveLimit
 
 0.1.1
