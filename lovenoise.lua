@@ -1,6 +1,6 @@
 
 local lovenoise = {
-	_VERSION     = 'v0.1.3',
+	_VERSION     = 'v0.1.4',
     _DESCRIPTION = 'Noise Library for LOVE',
     _URL         = 'https://github.com/icrawler/lovenoise',
     _LICENSE     = [[
@@ -98,20 +98,20 @@ function Noise:setoperation(operation)
 	return self
 end
 
-function Noise:evaluate(x, y, i)
+function Noise:evaluate(i, pos)
 	if i > #self.noisetable then return 0 end
 	local noise = self.noisetable[i]
 	if not preset[noise[1]] then return 0 end
 	if not noise[3] then
-		return preset[noise[1]]({x, y}, self.seed*i, noise[2])
+		return preset[noise[1]](pos, self.seed*i, noise[2])
 	end
-	return preset[noise[1]]({x, y}, self.seed*i, noise[2], unpack(noise[3]))
+	return preset[noise[1]](pos, self.seed*i, noise[2], unpack(noise[3]))
 end
 
-function Noise:eval(x, y)
+function Noise:eval(...)
 	local result = 1
 	for i=1, #self.noisetable do
-		local v = self:evaluate(x, y, i)
+		local v = self:evaluate(i, {...})
 		if self.operation == "multiply" then
 			result = result*v
 		elseif self.operation == "divide" then

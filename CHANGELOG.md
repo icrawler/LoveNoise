@@ -1,3 +1,7 @@
+0.1.4
+-----
+* Added support for multidimensional noise.
+
 0.1.3
 -----
 * Added :setmap
