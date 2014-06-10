@@ -66,6 +66,12 @@ Changes which operation to use when combining noise. Valid operations: multiply,
 ###:setmap(map)
 Sets the mapping function to use when evaluating values. If the function is called with no arguments, it's set to nil.
 
+###:eval(...)
+Evaluates the value of the combined noise functions at a given position (up to 4 dimensions are possible.)
+
+###:evaluate(i, pos)
+Evaluates the value of the ith noise function at a given position (up to 4 dimensions are possible.)
+
 Available Noise Functions
 -------------------------
 
