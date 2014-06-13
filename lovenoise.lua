@@ -1,6 +1,6 @@
 
 local lovenoise = {
-	_VERSION     = 'v0.1.4',
+	_VERSION     = 'v0.1.5',
     _DESCRIPTION = 'Noise Library for LOVE',
     _URL         = 'https://github.com/icrawler/lovenoise',
     _LICENSE     = [[
@@ -31,7 +31,7 @@ local lovenoise = {
 
 -- local references
 local MAXVAL = 2 ^ 32
-local random = math.random
+local random = love.math.random
 local max = math.max
 local min = math.min
 
@@ -51,8 +51,8 @@ end
 
 -- Main Functions --
 
-function lovenoise.newNoise(noisetable)
-	return Noise.new(noisetable)
+function lovenoise.newNoise(...)
+	return Noise.new({...})
 end
 
 function lovenoise.findOctaveLimit(a, d)

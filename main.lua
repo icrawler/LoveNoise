@@ -6,15 +6,14 @@ end
 
 function love.load(dt)
 	-- all the good fun stuff
-	testNoise = lovenoise.newNoise({
+	testNoise = lovenoise.newNoise(
 									   {"fractal", 130, {5, 0.5, 2}}
-								   })
-	testNoise:setseed(42):setmap(testMap)
+								   )
+	testNoise:setmap(testMap):setseed(love.math.random()*1000)
 	print(lovenoise.findOctaveLimit(0.5, 255))
 
 	-- converting noise data to a grayscale image
 	local noisedata = love.image.newImageData(800, 600)
-	local seed = math.random()*6400
 	local t = love.timer.getTime()
 	for y=1, 600 do
 		for x=1, 800 do

@@ -18,10 +18,10 @@ Creating a new noise object:
 ```lua
 -- This creates a new Noise object called testNoise which contains two noise
 -- functions.
-testNoise = lovenoise.newNoise({
+testNoise = lovenoise.newNoise(
 								   {"fractal", 64, {3, 0.5, 2}},
 								   {"simplex", 128}
-							   })
+							   )
 -- The following lines sets testNoise's threshold and seed to 0.2 and 1337
 -- respectively.
 testNoise:setthreshold(0.2)
@@ -41,11 +41,11 @@ local val = testNoise:eval(0.2, 0.5)
 Noise Format
 ------------
 ```lua
-{
+
 	{"nameofnoise", scale, {args, if, any}},
 	{"othernoise", scale, {args, if, any}},
 	...
-}
+
 ````
 
 Available Noise Methods
