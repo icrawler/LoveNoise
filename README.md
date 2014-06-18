@@ -2,15 +2,17 @@
 
 __LoveNoise__ is a wrapper library for LOVE's noise functions.
 
+Syntax is based on [Libnoise](http://libnoise.sourceforge.net/), another noise library written in C++.
+
 Currently only includes Simplex noise as its core noise function. Used for fractal and ridged-fractal noise.
 
 Installation
 ------------
 
-The `lovenoise.lua` and `presets.lua` files and the `lovenoise` folder should be dropped into an existing project and require lovenoise.
+The `lovenoise.lua` and `presets.lua` files, the `lovenoise` and the `third-party` folder should be dropped into an existing project. After that, add this line ontop of your files that uses lovenoise.
 
 ```lua
-lovenoise = require "lovenoise"
+local lovenoise = require "lovenoise"
 ````
 
 Examples
