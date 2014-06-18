@@ -1,3 +1,7 @@
+0.2.0
+-----
+* Rewrote codebase. Now uses Noise Module objects instead of tables.
+
 0.1.5
 -----
 * changed noise format for convenience.

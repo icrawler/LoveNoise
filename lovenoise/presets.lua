@@ -9,8 +9,11 @@ local function clamp01(v)
 	return (v > 1 and 1 or v) < 0 and 0 or v
 end
 
--- fractal noise
-local function fractalNoise1(x, n, a, f)
+-- [[ Fractal Noise ]] --
+
+-- 1D
+local function fractal1(x, n, a, f)
+	if n == 1 then return lnoise(x)*2-1 end
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -21,10 +24,12 @@ local function fractalNoise1(x, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v*0.5+0.5
+	return val/v
 end
 
-local function fractalNoise2(x, y, n, a, f)
+-- 2D
+local function fractal2(x, y, n, a, f)
+	if n == 1 then return lnoise(x, y)*2-1 end
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -35,10 +40,12 @@ local function fractalNoise2(x, y, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v*0.5+0.5
+	return val/v
 end
 
-local function fractalNoise3(x, y, z, n, a, f)
+-- 3D
+local function fractal3(x, y, z, n, a, f)
+	if n == 1 then return lnoise(x, y, z)*2-1 end
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -49,10 +56,12 @@ local function fractalNoise3(x, y, z, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v*0.5+0.5
+	return val/v
 end
 
-local function fractalNoise4(x, y, z, w, n, a, f)
+-- 4D
+local function fractal4(x, y, z, w, n, a, f)
+	if n == 1 then return lnoise(x, y, z, w)*2-1 end
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -64,51 +73,50 @@ local function fractalNoise4(x, y, z, w, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v*0.5+0.5
+	return val/v
 end
 
-local function fractalNoise(pos, seed, scale, n, a, f)
+-- Main function
+local function fractal(pos, seed, frequency, n, a, f)
 	local l = #pos
-	a = a or 0.5
-	f = f or 2
-	seed = seed or 42
+	local s = frequency
 	if l == 1 then
 		return
-		fractalNoise1(pos[1]/scale+seed, n, a, f)
+		fractal1(pos[1]*s+seed, n, a, f)
 	elseif l == 2 then
 		return
-		fractalNoise2(pos[1]/scale+seed, pos[2]/scale-seed, n, a, f)
+		fractal2(pos[1]*s+seed, pos[2]*s-seed, n, a, f)
 	elseif l == 3 then
 		return
-		fractalNoise3(pos[1]/scale+seed, pos[2]/scale-seed, pos[3]/scale+seed, n, a, f)
+		fractal3(pos[1]*s+seed, pos[2]*s-seed, pos[3]*s+seed, n, a, f)
 	elseif l == 4 then
 		return
-		fractalNoise4(pos[1]/scale-seed, pos[2]/scale+seed, pos[3]/scale-seed, pos[4]/scale+seed, n, a, f)
+		fractal4(pos[1]*s-seed, pos[2]*s+seed, pos[3]*s-seed, pos[4]*s+seed, n, a, f)
 	end
 	return nil
 end
 
 -- simplex noise
-local function simplexNoise(pos, seed, scale)
+local function simplex(pos, seed, frequency)
 	local l = #pos
-	seed = seed or 42
+	local s = frequency
 	if l == 1 then
 		return
-		lnoise(pos[1]/scale+seed)
+		lnoise(pos[1]*s+seed)*2-1
 	elseif l == 2 then
 		return
-		lnoise(pos[1]/scale+seed, pos[2]/scale-seed)
+		lnoise(pos[1]*s+seed, pos[2]*s-seed)*2-1
 	elseif l == 3 then
 		return
-		lnoise(pos[1]/scale+seed, pos[2]/scale-seed, pos[3]/scale+seed)
+		lnoise(pos[1]*s+seed, pos[2]*s-seed, pos[3]*s+seed)*2-1
 	elseif l == 4 then
 		return
-		lnoise(pos[1]/scale-seed, pos[2]/scale+seed, pos[3]/scale-seed, pos[4]/scale+seed)
+		lnoise(pos[1]*s-seed, pos[2]*s+seed, pos[3]*s-seed, pos[4]*s+seed)*2-1
 	end
 end
 
 -- ridged multifractal noise
-local function ridgedNoise1(x, n, a, f)
+local function ridged1(x, n, a, f)
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -120,10 +128,10 @@ local function ridgedNoise1(x, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v
+	return val/v*2-1
 end
 
-local function ridgedNoise2(x, y, n, a, f)
+local function ridged2(x, y, n, a, f)
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -135,10 +143,10 @@ local function ridgedNoise2(x, y, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v
+	return val/v*2-1
 end
 
-local function ridgedNoise3(x, y, z, n, a, f)
+local function ridged3(x, y, z, n, a, f)
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -150,10 +158,10 @@ local function ridgedNoise3(x, y, z, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v
+	return val/v*2-1
 end
 
-local function ridgedNoise4(x, y, z, w, n, a, f)
+local function ridged4(x, y, z, w, n, a, f)
 	local ca = 1
 	local cf = 1
 	local val = 0
@@ -165,28 +173,26 @@ local function ridgedNoise4(x, y, z, w, n, a, f)
 		ca = ca * a
 		cf = cf * f
 	end
-	return val/v
+	return val/v*2-1
 end
 
-local function ridgedNoise(pos, seed, scale, n, a, f)
+local function ridgedMulti(pos, seed, frequency, n, a, f)
 	local l = #pos
-	a = a or 0.5
-	f = f or 2
-	seed = seed or 42
+	local s = frequency
 	if l == 1 then
 		return
-		ridgedNoise1(pos[1]/scale+seed, n, a, f)
+		ridged1(pos[1]*s+seed, n, a, f)
 	elseif l == 2 then
 		return
-		ridgedNoise2(pos[1]/scale+seed, pos[2]/scale-seed, n, a, f)
+		ridged2(pos[1]*s+seed, pos[2]*s-seed, n, a, f)
 	elseif l == 3 then
 		return
-		ridgedNoise3(pos[1]/scale+seed, pos[2]/scale-seed, pos[3]/scale+seed, n, a, f)
+		ridged3(pos[1]*s+seed, pos[2]*s-seed, pos[3]*s+seed, n, a, f)
 	elseif l == 4 then
 		return
-		ridgedNoise4(pos[1]/scale-seed, pos[2]/scale+seed, pos[3]/scale-seed, pos[4]/scale+seed, n, a, f)
+		ridged4(pos[1]*s-seed, pos[2]*s+seed, pos[3]*s-seed, pos[4]*s+seed, n, a, f)
 	end
 	return nil
 end
 
-return {fractal = fractalNoise, simplex = simplexNoise, ridged = ridgedNoise}
+return {fractal = fractal, simplex = simplex, ridgedMulti = ridgedMulti}
