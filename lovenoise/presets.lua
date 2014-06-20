@@ -1,5 +1,5 @@
 -- local references
-local lnoise = love.math.noise
+local lnoise = love.math.noise -- Can be modified for other frameworks
 local abs = function(a) return a < 0 and -a or a end
 local max = math.max
 local min = math.min
@@ -195,4 +195,85 @@ local function ridgedMulti(pos, seed, frequency, n, a, f)
 	return nil
 end
 
-return {fractal = fractal, simplex = simplex, ridgedMulti = ridgedMulti}
+-- billow noise
+local function billow1(x, n, a, f)
+	local ca = 1
+	local cf = 1
+	local val = 0
+	local v = 0
+	for _=1, n do
+		local s = abs(lnoise(x*cf)*2-1)
+		val = val + s*ca
+		v = v + ca
+		ca = ca * a
+		cf = cf * f
+	end
+	return val/v*2-1
+end
+
+local function billow2(x, y, n, a, f)
+	local ca = 1
+	local cf = 1
+	local val = 0
+	local v = 0
+	for _=1, n do
+		local s = abs(lnoise(x*cf, y*cf)*2-1)
+		val = val + s*ca
+		v = v + ca
+		ca = ca * a
+		cf = cf * f
+	end
+	return val/v*2-1
+end
+
+local function billow3(x, y, z, n, a, f)
+	local ca = 1
+	local cf = 1
+	local val = 0
+	local v = 0
+	for _=1, n do
+		local s = abs(lnoise(x*cf, y*cf, z*cf)*2-1)
+		val = val + s*ca
+		v = v + ca
+		ca = ca * a
+		cf = cf * f
+	end
+	return val/v*2-1
+end
+
+local function billow4(x, y, z, w, n, a, f)
+	local ca = 1
+	local cf = 1
+	local val = 0
+	local v = 0
+	for _=1, n do
+		local s = abs(lnoise(x*cf, y*cf, z*cf, w*cf)*2-1)
+		val = val + s*ca
+		v = v + ca
+		ca = ca * a
+		cf = cf * f
+	end
+	return val/v*2-1
+end
+
+local function billow(pos, seed, frequency, n, a, f)
+	local l = #pos
+	local s = frequency
+	if l == 1 then
+		return
+		billow1(pos[1]*s+seed, n, a, f)
+	elseif l == 2 then
+		return
+		billow2(pos[1]*s+seed, pos[2]*s-seed, n, a, f)
+	elseif l == 3 then
+		return
+		billow3(pos[1]*s+seed, pos[2]*s-seed, pos[3]*s+seed, n, a, f)
+	elseif l == 4 then
+		return
+		billow4(pos[1]*s-seed, pos[2]*s+seed, pos[3]*s-seed, pos[4]*s+seed, n, a, f)
+	end
+	return nil
+end
+
+return {fractal = fractal, simplex = simplex, ridgedMulti = ridgedMulti,
+		billow = billow}

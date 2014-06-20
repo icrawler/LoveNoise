@@ -1,3 +1,7 @@
+0.2.1
+-----
+* Added billow noise and invert module.
+
 0.2.0
 -----
 * Rewrote codebase. Now uses Noise Module objects instead of tables.

@@ -23,7 +23,12 @@ See main.lua.
 Docs
 ----
 
-Will be created at Github.io soon.
+Will be created at Github.io soon. For now, you can check Libnoise's docs which explains what each module does.
+
+Use for other frameworks
+------------------------
+
+You can use this library for other frameworks, just change the `lnoise` function in line 2 of the presets.lua file to the noise function of your choice (currently uses LOVE's Simplex Noise generator.)
 
 License
 -------
