@@ -4,7 +4,7 @@ __LoveNoise__ is a wrapper library for LOVE's noise functions.
 
 Syntax is based on [Libnoise](http://libnoise.sourceforge.net/), another noise library written in C++.
 
-Currently only includes Simplex noise as its core noise function. Used for fractal and ridged-fractal noise.
+Currently only includes Simplex noise as its core noise function. Used for all the other types of noise.
 
 Installation
 ------------
