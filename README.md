@@ -23,7 +23,7 @@ See main.lua.
 Docs
 ----
 
-Will be created at Github.io soon. For now, you can check Libnoise's docs which explains what each module does.
+See [Project Page](http://icrawler.github.io/LoveNoise/).
 
 Use for other frameworks
 ------------------------
