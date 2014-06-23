@@ -268,7 +268,7 @@ return {
             Max=Max,
             Min=Min,
             Multiply=Multiply,
-            Power=Power
+            Power=Power,
 
             -- Modifier Modules
             Invert=Invert
