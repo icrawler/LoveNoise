@@ -3,31 +3,34 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <title>Lovenoise by icrawler</title>
   </head>
 
   <body>
-    <header>
+    <div id="container">
       <div class="inner">
-        <h1>Lovenoise</h1>
-        <h2>A Noise Library for LOVE</h2>
-        <a href="https://github.com/icrawler/LoveNoise" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
+        <header>
+          <h1>Lovenoise</h1>
+          <h2>A Noise Library for LOVE</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/icrawler/LoveNoise/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/icrawler/LoveNoise/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/icrawler/LoveNoise" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
           <h1>
 <a name="lovenoise---a-love-noise-library" class="anchor" href="#lovenoise---a-love-noise-library"><span class="octicon octicon-link"></span></a>LoveNoise - a Love Noise library</h1>
 
@@ -48,7 +51,30 @@
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
-<p>See repository.</p>
+<p>Creating a 3 new modules and getting the final value:</p>
+
+<div class="highlight highlight-lua"><pre><span class="c1">-- Require lovenoise first</span>
+<span class="kd">local</span> <span class="n">lovenoise</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">'</span><span class="s">lovenoise'</span>
+
+<span class="c1">-- Reference lovenoise.modules (optional)</span>
+<span class="kd">local</span> <span class="n">modules</span> <span class="o">=</span> <span class="n">lovenoise</span><span class="p">.</span><span class="n">modules</span>
+
+<span class="c1">-- Creating a new Simplex module</span>
+<span class="kd">local</span> <span class="n">simplexMod</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">Simplex</span><span class="p">:</span><span class="n">new</span><span class="p">()</span>
+
+<span class="c1">-- Setting its properties (see doc)</span>
+<span class="n">simplexMod</span><span class="p">:</span><span class="n">setFrequency</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">simplexMod</span><span class="p">:</span><span class="n">setSeed</span><span class="p">(</span><span class="nb">math.random</span><span class="p">()</span><span class="o">*</span><span class="mi">600</span><span class="p">)</span>
+
+<span class="c1">-- Creating a new RidgedMulti module with 4 octaves (with condensed property setters)</span>
+<span class="kd">local</span> <span class="n">ridgedMod</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">RidgedMulti</span><span class="p">:</span><span class="n">new</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span><span class="n">setFrequency</span><span class="p">(</span><span class="mf">0.01</span><span class="p">):</span><span class="n">setSeed</span><span class="p">(</span><span class="nb">math.random</span><span class="p">()</span><span class="o">*</span><span class="mi">600</span><span class="p">)</span>
+
+<span class="c1">-- Creating a new Min module with the previous modules as its sources</span>
+<span class="kd">local</span> <span class="n">minMod</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">Min</span><span class="p">:</span><span class="n">new</span><span class="p">(</span><span class="n">ridgedMod</span><span class="p">,</span> <span class="n">simplexMod</span><span class="p">)</span>
+
+<span class="c1">-- Getting a value at location [5, 6]</span>
+<span class="kd">local</span> <span class="n">val</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">Min</span><span class="p">:</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
 
 <h2>
 <a name="use-for-other-frameworks" class="anchor" href="#use-for-other-frameworks"><span class="octicon octicon-link"></span></a>Use for other frameworks</h2>
@@ -69,7 +95,7 @@
 <li>
 <code>:addSource(index, source)</code> -- Adds a source module at a specified index. Indices are one-based.</li>
 <li>
-<code>:getValue(x, [y, z, w])</code> -- Gets the value of the module at a specified location (overridden by subclass.) Values range from -1 to 1.</li>
+<code>:getValue(x, [y, z, w])</code> -- Gets the value of the module at a specified location (overridden by subclass.) Values usually range from -1 to 1.</li>
 </ul><h3>
 <a name="noisemodule-superclass" class="anchor" href="#noisemodule-superclass"><span class="octicon octicon-link"></span></a>NoiseModule superclass</h3>
 
@@ -79,7 +105,7 @@
 <li>
 <code>:new(seed, frequency)</code> -- Creates a new noise module with a specified seed and frequency (overridden by subclass.)</li>
 <li>
-<code>:getValue(x, [y, z, w])</code> -- Gets the value of the module at a specified location (overridden by subclass.) Values range from -1 to 1.</li>
+<code>:getValue(x, [y, z, w])</code> -- Gets the value of the module at a specified location (overridden by subclass.) Values usually range from -1 to 1.</li>
 <li>
 <code>:setSeed(seed)</code> -- Sets the seed of the noise module.</li>
 <li>
@@ -186,23 +212,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </code></pre>
         </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/icrawler/LoveNoise/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/icrawler/LoveNoise/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+        <footer>
+          Lovenoise is maintained by <a href="https://github.com/icrawler">icrawler</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
-          <p class="repo-owner"><a href="https://github.com/icrawler/LoveNoise"></a> is maintained by <a href="https://github.com/icrawler">icrawler</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
+        
       </div>
     </div>
-
-  
   </body>
 </html>
